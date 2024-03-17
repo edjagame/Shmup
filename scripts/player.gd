@@ -76,5 +76,5 @@ func damaged(dmg: int):
 		await tween.finished
 		health_depleted.emit()
 		hide()
-		position = Vector2(-100,0)
+		position = Vector2(0,-100)
 

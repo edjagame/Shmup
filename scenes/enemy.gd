@@ -34,7 +34,6 @@ func _physics_process(delta) -> void:
 	time += delta
 	position.x -= delta * SPEED
 	position.y = center_y + sin(time)*SPEED
-	print(position.x)
 	if position.x < -100:
 		queue_free()
 	
