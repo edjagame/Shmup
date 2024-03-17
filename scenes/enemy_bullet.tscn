@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://knxknpdbqjyf"]
+
+[ext_resource type="Script" path="res://scenes/enemy_bullet.gd" id="1_0yc0d"]
+[ext_resource type="Texture2D" uid="uid://q5h4ohb57my7" path="res://assets/Tiles/tile_0004.png" id="1_rfa4m"]
+[ext_resource type="Texture2D" uid="uid://dinb37bhp0l5g" path="res://assets/Tiles/tile_0000.png" id="2_6huhr"]
+[ext_resource type="Texture2D" uid="uid://be3aijq5fms03" path="res://assets/Tiles/tile_0005.png" id="2_b2jcy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8fdo"]
+size = Vector2(4, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wbknl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_b2jcy")
+}],
+"loop": true,
+"name": &"explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rfa4m")
+}],
+"loop": true,
+"name": &"fired",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6huhr")
+}],
+"loop": true,
+"name": &"in_flight",
+"speed": 5.0
+}]
+
+[node name="EnemyBullet" type="Area2D"]
+rotation = -1.5708
+script = ExtResource("1_0yc0d")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8.74228e-08, -2.38419e-07)
+shape = SubResource("RectangleShape2D_u8fdo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0.50632, 0.841866, 1)
+texture_filter = 3
+sprite_frames = SubResource("SpriteFrames_wbknl")
+animation = &"explode"
+
+[node name="Despawn" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Despawn" to="." method="_on_despawn_timeout"]

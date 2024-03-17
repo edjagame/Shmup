@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://il402m5rm3vh"]
+
+[ext_resource type="Texture2D" uid="uid://bthosy8oanict" path="res://assets/Ships/ship_0012.png" id="1_kdo74"]
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_y73i5"]
+[ext_resource type="Texture2D" uid="uid://udwmefkejf8f" path="res://assets/Ships/ship_0013.png" id="2_flvgc"]
+[ext_resource type="PackedScene" uid="uid://knxknpdbqjyf" path="res://scenes/enemy_bullet.tscn" id="2_p8dhw"]
+[ext_resource type="Texture2D" uid="uid://kd3d6qgamb8" path="res://assets/Ships/ship_0014.png" id="3_34v5u"]
+[ext_resource type="Texture2D" uid="uid://be3aijq5fms03" path="res://assets/Tiles/tile_0005.png" id="3_a7rva"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n84gg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_a7rva")
+}],
+"loop": true,
+"name": &"explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kdo74")
+}],
+"loop": true,
+"name": &"ship1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_flvgc")
+}],
+"loop": true,
+"name": &"ship2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_34v5u")
+}],
+"loop": true,
+"name": &"ship3",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2g55r"]
+size = Vector2(34, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n25j5"]
+size = Vector2(29, 20.6666)
+
+[node name="Enemy" type="CharacterBody2D"]
+texture_filter = 3
+position = Vector2(525, 538)
+rotation = -1.5708
+scale = Vector2(3, 3)
+script = ExtResource("1_y73i5")
+projectile = ExtResource("2_p8dhw")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_n84gg")
+animation = &"ship1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2g55r")
+
+[node name="BulletSpawn" type="Marker2D" parent="."]
+position = Vector2(5.68248e-07, -13)
+
+[node name="AttackSpeed" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="BodyCollider" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.166626, -0.333313)
+shape = SubResource("RectangleShape2D_n25j5")
+
+[connection signal="timeout" from="AttackSpeed" to="." method="_on_attack_speed_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
