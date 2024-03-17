@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal health_depleted
+signal hit_score
 
 const SPEED = 500.0
 
@@ -44,10 +45,11 @@ func shoot() -> void:
 	var inst: PlayerBullet = projectile.instantiate()
 	get_tree().current_scene.add_child(inst)
 	inst.position = $BulletSpawn.global_position
+	inst.bullet_impact.connect(_bullet_impact)
 	
 	$AttackSpeed.start()
 	can_shoot = false
-
+	
 func _on_attack_speed_timeout():
 	can_shoot = true
 	
@@ -78,3 +80,5 @@ func damaged(dmg: int):
 		hide()
 		position = Vector2(0,-100)
 
+func _bullet_impact():
+	hit_score.emit()

@@ -36,6 +36,7 @@ func _physics_process(delta) -> void:
 	position.y = center_y + sin(time)*SPEED
 	if position.x < -100:
 		queue_free()
+		destroyed.emit()
 	
 
 func _on_attack_speed_timeout():
@@ -64,3 +65,4 @@ func _on_area_2d_body_entered(body):
 		tween.tween_property($AnimatedSprite2D, "scale", Vector2(3,3), 0.1)
 		await tween.finished
 		queue_free()
+		destroyed.emit()

@@ -9,7 +9,6 @@ func _ready():
 	score = 0
 	enemies = 0
 	$SpawnTimer.start()
-	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,3 +33,6 @@ func _on_spawn_timer_timeout():
 func _on_enemy_destroyed():
 	enemies -= 1
 	score += 100
+
+func _on_player_hit_score():
+	score += 10

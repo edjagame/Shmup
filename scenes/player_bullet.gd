@@ -2,6 +2,7 @@ extends Area2D
 
 class_name PlayerBullet
 
+signal bullet_impact
 var in_flight
 var speed = 20;
 
@@ -27,7 +28,7 @@ func _on_body_entered(body):
 		tween.tween_property($AnimatedSprite2D, "scale", Vector2(3,3), 0.1)
 		await tween.finished
 		queue_free()
-
+		bullet_impact.emit()
 
 func _on_despawn_timeout():
 	queue_free()

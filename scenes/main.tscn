@@ -57,4 +57,5 @@ horizontal_alignment = 1
 offset_right = 40.0
 offset_bottom = 23.0
 
+[connection signal="hit_score" from="Player" to="." method="_on_player_hit_score"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
